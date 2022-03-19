@@ -3,11 +3,17 @@
   <file datatype="xml" source-language="en-US" target-language="es-ES" original="ALProject1">
     <body>
       <group id="body">
-        <trans-unit id="Codeunit 2637455536 - Method 3678584305 - NamedType 3691381949" size-unit="char" translate="yes" xml:space="preserve">
+        <trans-unit id="Codeunit 2637455536 - Method 3587103873 - NamedType 3691381949" size-unit="char" translate="yes" xml:space="preserve">
           <source>Result: </source>
           <note from="Developer" annotates="general" priority="2">ESP="Resultado: "</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit MyConection - Method CallService - NamedType ResultLbl</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit MyConection - Method CallWebService - NamedType ResultLbl</note>
           <target>Resultado: </target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3267809749 - Method 597699363 - NamedType 2704177395" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Filter type %1 is already in URL %2 and there can only be one per URL</source>
+          <note from="Developer" annotates="general" priority="2">ESP="El tipo de filtro %1 ya esta en la URL %2 y solo puede haber uno por URL"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit MyCreateUrl - Method InitUrl - NamedType error01</note>
+          <target>El tipo de filtro %1 ya esta en la URL %2 y solo puede haber uno por URL</target>
         </trans-unit>
       </group>
     </body>

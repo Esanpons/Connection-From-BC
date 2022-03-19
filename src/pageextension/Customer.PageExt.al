@@ -17,7 +17,10 @@ pageextension 51100 "Customer" extends "Customer List"
                 begin
                     Clear(MyConection);
                     Clear(MyCreateUrl);
-                    URL := MyCreateUrl.ReturnBaseURLPageAPI('mycustomers');
+
+                    MyCreateUrl.InitBaseURLPageAPI('mycustomers');
+                    URL := MyCreateUrl.GetURL();
+
                     MyConection.CreateAuthorization('admin', 'admin');
                     jsontext := MyConection.CallWebService(URL, 'Post', ReturnTestJsonPageAPI('CREATE'));
                     NewCustNo := ReturnCustomerNo(JsonText);
@@ -37,8 +40,11 @@ pageextension 51100 "Customer" extends "Customer List"
                 begin
                     Clear(MyConection);
                     Clear(MyCreateUrl);
-                    URL := MyCreateUrl.ReturnBaseURLPageAPI('mycustomers');
-                    MyCreateUrl.SetUrlPageAPI(URL, NewCustNo, '');
+
+                    MyCreateUrl.InitBaseURLPageAPI('mycustomers');
+                    MyCreateUrl.SetUrlFilterKeyPageAPI(NewCustNo);
+                    URL := MyCreateUrl.GetURL();
+
                     MyConection.CreateAuthorization('admin', 'admin');
                     Result := MyConection.CallWebService(URL, 'Get', '');
                     Message(Result);
@@ -57,8 +63,11 @@ pageextension 51100 "Customer" extends "Customer List"
                 begin
                     Clear(MyConection);
                     Clear(MyCreateUrl);
-                    URL := MyCreateUrl.ReturnBaseURLPageAPI('mycustomers');
-                    MyCreateUrl.SetUrlPageAPI(URL, NewCustNo, '');
+
+                    MyCreateUrl.InitBaseURLPageAPI('mycustomers');
+                    MyCreateUrl.SetUrlFilterKeyPageAPI(NewCustNo);
+                    URL := MyCreateUrl.GetURL();
+
                     MyConection.CreateAuthorization('admin', 'admin');
                     MyConection.SearchTag(URL, NewCustNo);
                     Result := MyConection.CallWebService(URL, 'Put', ReturnTestJsonPageAPI('MOD'));
@@ -78,8 +87,11 @@ pageextension 51100 "Customer" extends "Customer List"
                 begin
                     Clear(MyConection);
                     Clear(MyCreateUrl);
-                    URL := MyCreateUrl.ReturnBaseURLPageAPI('mycustomers');
-                    MyCreateUrl.SetUrlPageAPI(URL, NewCustNo, '');
+
+                    MyCreateUrl.InitBaseURLPageAPI('mycustomers');
+                    MyCreateUrl.SetUrlFilterKeyPageAPI(NewCustNo);
+                    URL := MyCreateUrl.GetURL();
+
                     MyConection.CreateAuthorization('admin', 'admin');
                     Result := MyConection.CallWebService(URL, 'Delete', '');
                     Message(Result);
@@ -98,14 +110,17 @@ pageextension 51100 "Customer" extends "Customer List"
                 begin
                     Clear(MyConection);
                     Clear(MyCreateUrl);
-                    URL := MyCreateUrl.ReturnBaseURLPageAPI('mycustomers');
-                    MyCreateUrl.SetUrlPageAPI(URL, NewCustNo, 'editName');
+
+                    MyCreateUrl.InitBaseURLPageAPI('mycustomers');
+                    MyCreateUrl.SetUrlFilterKeyPageAPI(NewCustNo);
+                    MyCreateUrl.SetUrlFuntionPageAPI('editName');
+                    URL := MyCreateUrl.GetURL();
+
                     MyConection.CreateAuthorization('admin', 'admin');
                     Result := MyConection.CallWebService(URL, 'Function', '');
                     Message(Result);
                 end;
             }
-
 
             action(GetQueryOdata4)
             {
@@ -120,13 +135,15 @@ pageextension 51100 "Customer" extends "Customer List"
                 begin
                     Clear(MyConection);
                     Clear(MyCreateUrl);
-                    URL := MyCreateUrl.ReturnBaseURLPageOData4('JobLedgerEntries');
+
+                    MyCreateUrl.InitBaseURLPageOData4('JobLedgerEntries');
+                    URL := MyCreateUrl.GetURL();
+
                     MyConection.CreateAuthorization('admin', 'admin');
                     Result := MyConection.CallWebService(URL, 'Get', '');
                     Message(Result);
                 end;
             }
-
 
             action(GetPageAndSubPageOdata4)
             {
@@ -141,13 +158,18 @@ pageextension 51100 "Customer" extends "Customer List"
                 begin
                     Clear(MyConection);
                     Clear(MyCreateUrl);
-                    URL := MyCreateUrl.ReturnBaseURLPageOData4('SalesOrder');
-                    MyCreateUrl.SetUrlSubPage(URL, 'SalesOrderSalesLines');
-                    MyCreateUrl.SetUrlTop(URL, 2);
-                    MyCreateUrl.SetUrlEqValue(URL, 'Status', 'Released', true);
-                    MyCreateUrl.SetUrlEqValue(URL, 'Sell_to_Customer_No', '30000', true);
-                    MyCreateUrl.SetUrlSelectFields(URL, 'Document_Type,No,Sell_to_Customer_No');
+
+                    MyCreateUrl.InitBaseURLPageOData4('SalesOrder');
+                    MyCreateUrl.SetUrlSubPage('SalesOrderSalesLines');
+                    MyCreateUrl.SetUrlTop(2);
+                    MyCreateUrl.SetUrlFilter('Status', 'Released', MyLogicalOperators::" and ", MyURLFilter::" eq ");
+                    MyCreateUrl.SetUrlFilter('Sell_to_Customer_No', '30000', MyLogicalOperators::" and ", MyURLFilter::" eq ");
+                    MyCreateUrl.SetUrlFilter('Posting_Date', 20240126D, MyLogicalOperators::" and ", MyURLFilter::" ne ");
+                    MyCreateUrl.SetUrlSelectFields('Document_Type,No,Sell_to_Customer_No');
+                    URL := MyCreateUrl.GetURL();
+
                     MyConection.CreateAuthorization('admin', 'admin');
+                    Message(URL);
                     Result := MyConection.CallWebService(URL, 'Get', '');
                     Message(Result);
                 end;
