@@ -1,0 +1,10 @@
+{
+    "CRS.ObjectNamePrefix": "",
+    "CRS.ObjectNameSuffix": "",
+    "al.codeAnalyzers": [
+        //"${PerTenantExtensionCop}", // es cuando tú haces una extensión que estará en SAS
+        //"${AppSourceCop}", // es para saber si nuestro código subiría a app source
+        //"${CodeCop}", // analizador de código estándar
+        //"${UICop}" //Para hacer las propiedades mínimas para ejecutar tu desarrollo.
+    ]
+}
