@@ -150,8 +150,8 @@ pageextension 51100 "Customer" extends "Customer List"
                 ApplicationArea = All;
                 Promoted = true;
                 PromotedCategory = Process;
-                Caption = 'GET Page And SubPage Odata4', Locked = true;
-                ToolTip = 'GET Page And SubPage Odata4', Locked = true;
+                Caption = 'GET Page And SubPage And Filters Odata4', Locked = true;
+                ToolTip = 'GET Page And SubPage And Filters Odata4', Locked = true;
                 Image = SendApprovalRequest;
 
                 trigger OnAction()
@@ -161,11 +161,13 @@ pageextension 51100 "Customer" extends "Customer List"
 
                     MyCreateUrl.InitBaseURLPageOData4('SalesOrder');
                     MyCreateUrl.SetUrlSubPage('SalesOrderSalesLines');
+                    MyCreateUrl.SetUrlSubPage_Filter('SalesOrderSalesLines', 'Line_No', 20000, MyLogicalOperators::" and ", MyURLFilter::" eq ");
+                    MyCreateUrl.SetUrlFilter('No', '101009', MyLogicalOperators::" and ", MyURLFilter::contains);
+                    MyCreateUrl.SetUrlSelectFields('Document_Type,No,Sell_to_Customer_No,Posting_Date');
                     MyCreateUrl.SetUrlTop(2);
                     MyCreateUrl.SetUrlFilter('Status', 'Released', MyLogicalOperators::" and ", MyURLFilter::" eq ");
-                    MyCreateUrl.SetUrlFilter('Sell_to_Customer_No', '30000', MyLogicalOperators::" and ", MyURLFilter::" eq ");
-                    MyCreateUrl.SetUrlFilter('Posting_Date', 20240126D, MyLogicalOperators::" and ", MyURLFilter::" ne ");
-                    MyCreateUrl.SetUrlSelectFields('Document_Type,No,Sell_to_Customer_No');
+                    MyCreateUrl.SetUrlFilter('Posting_Date', 20240127D, MyLogicalOperators::" and ", MyURLFilter::" gt ");
+                    MyCreateUrl.SetUrlFilter('Posting_Date', 20240129D, MyLogicalOperators::" and ", MyURLFilter::" lt ");
                     URL := MyCreateUrl.GetURL();
 
                     MyConection.CreateAuthorization('admin', 'admin');

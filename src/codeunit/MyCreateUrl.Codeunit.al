@@ -27,8 +27,6 @@ codeunit 51102 "MyCreateUrl"
     var
         FunctionLbl: Label '/Microsoft.NAV.', Locked = true;
     begin
-        FilterRepeatControl(UrlFuntionPageAPI, FunctionLbl, MyLogicalOperators::" ");
-
         NameFunction := FunctionLbl + NameFunction;
         UrlFuntionPageAPI := NameFunction;
     end;
@@ -38,7 +36,6 @@ codeunit 51102 "MyCreateUrl"
         char39: Char;
         TxtValueEquals: Text;
     begin
-
         char39 := 39;
         TxtValueEquals := Format(ValueEquals);
 
@@ -53,55 +50,56 @@ codeunit 51102 "MyCreateUrl"
         UrlFilterKeyPageAPI := TxtValueEquals;
     end;
 
+    //Muestra la subPage
     procedure SetUrlSubPage(NameSubPage: Text)
     var
         FilterLbl: Label '$expand=', Locked = true;
     begin
-        InitFilterUrl(UrlSubPage, FilterLbl, MyLogicalOperators::" ");
-        UrlSubPage := NameSubPage;
+        RepeatControl(UrlSubPage, FilterLbl, MyLogicalOperators::" ");
+
+        InitConsultationOptionsURL(UrlSubPage, FilterLbl, MyLogicalOperators::" ");
+        UrlSubPage += NameSubPage;
     end;
 
-
-
-    /*
-        procedure SetUrlSubPage_Filter( NameSubPage: Text)
-        var
-            FilterLbl: Label '$expand=%1($filter=', Locked = true;
-            TxtFilter: Text;
-            MyCreateUrl:Codeunit MyCreateUrl;
-        begin
-            Clear(MyCreateUrl);
-
-            TxtFilter := StrSubstNo(FilterLbl, NameSubPage);
-            //InitFilterUrl(URL, TxtFilter, MyLogicalOperators::" ");
-            MyCreateUrl.SetUrlFilter('Sell_to_Customer_No', '30000', MyLogicalOperators::" and ", MyURLFilter::" eq ");
-            UrlSubPage_Filter += GetURL();
-        end;
-    */
-
-
-
+    //Filtro de subpage
+    procedure SetUrlSubPage_Filter(NameSubPage: Text; TagField: Text; ValueEquals: Variant; MyLogicalOperators: Enum MyLogicalOperators; MyUrlFilter: Enum MyUrlFilter)
+    var
+        TxtFilter: Text;
+        MyCreateUrl: Codeunit MyCreateUrl;
+        WhichLbl: Label '?', Locked = true;
+        WhereLbl: Label '=', Locked = true;
+    begin
+        Clear(MyCreateUrl);
+        MyCreateUrl.SetUrlFilter(TagField, ValueEquals, MyLogicalOperators, MyURLFilter);
+        UrlSubPage_Filter += MyCreateUrl.GetURL();
+        UrlSubPage_Filter := DelChr(UrlSubPage_Filter, WhereLbl, WhichLbl);
+    end;
 
     //Muestra los primeros registros que se ponga en el Top
     procedure SetUrlTop(Top: Integer)
     var
         FilterLbl: Label '$top=', Locked = true;
     begin
-        InitFilterUrl(UrlTop, FilterLbl, MyLogicalOperators::" ");
-        UrlTop := Format(Top);
+        InitConsultationOptionsURL(UrlTop, FilterLbl, MyLogicalOperators::" ");
+        UrlTop += Format(Top);
     end;
 
+    //solo mostrara en el Json los campos añadidos
     procedure SetUrlSelectFields(NameFields: Text)
     var
         FilterLbl: Label '$select=', Locked = true;
     begin
-        InitFilterUrl(UrlSelectFields, FilterLbl, MyLogicalOperators::" ");
-        UrlSelectFields := NameFields;
+        RepeatControl(UrlSelectFields, FilterLbl, MyLogicalOperators::" ");
+
+        InitConsultationOptionsURL(UrlSelectFields, FilterLbl, MyLogicalOperators::" ");
+        UrlSelectFields += NameFields;
     end;
 
+    //filtros 
     procedure SetUrlFilter(TagField: Text; ValueEquals: Variant; MyLogicalOperators: Enum MyLogicalOperators; MyUrlFilter: Enum MyUrlFilter)
     var
         FilterLbl: Label '$filter=', Locked = true;
+        ParenthesisLbl: Label '(%1,%2)', Locked = true;
         Pos: Integer;
         char39: Char;
         TxtValueEquals: Text;
@@ -116,16 +114,28 @@ codeunit 51102 "MyCreateUrl"
                 TxtValueEquals := Format(ValueEquals, 0, '<Year4>-<Month,2>-<Day,2>');
         end;
 
-        InitFilterUrl(UrlFilter, FilterLbl, MyLogicalOperators);
-        UrlFilter += TagField + Format(MyUrlFilter) + TxtValueEquals;
+        InitConsultationOptionsURL(UrlFilter, FilterLbl, MyLogicalOperators);
+        case MyUrlFilter of
+            MyUrlFilter::contains, MyUrlFilter::startswith, MyUrlFilter::endswith:
+                UrlFilter += Format(MyUrlFilter) + StrSubstNo(ParenthesisLbl, TagField, TxtValueEquals);
+            else
+                UrlFilter += TagField + Format(MyUrlFilter) + TxtValueEquals;
+        end;
+
     end;
 
+    //retorna la URL ya creada
     procedure GetURL(): Text
     var
         Pos: Integer;
         TxtLastUrl: Text;
         PosicionInicialLbl: Label '?$', Locked = true;
+        SubPageFilterLbl: Label '(%1)', Locked = true;
     begin
+        if UrlSubPage_Filter <> '' then begin
+            UrlSubPage += StrSubstNo(SubPageFilterLbl, UrlSubPage_Filter);
+        end;
+
         case true of
             StrPos(UrlSubPage, PosicionInicialLbl) <> 0:
                 TxtLastUrl := UrlSubPage + UrlTop + UrlSelectFields + UrlFilter;
@@ -140,7 +150,8 @@ codeunit 51102 "MyCreateUrl"
         exit(BaseURL + UrlFilterKeyPageAPI + UrlFuntionPageAPI + TxtLastUrl);
     end;
 
-    local procedure InitFilterUrl(var URL: Text; FilterTxt: Text; MyEnumUrlFilter: Enum MyLogicalOperators)
+    //funcion para inicilaizar las opciones de consultas de la URL
+    local procedure InitConsultationOptionsURL(var TextFilterUrl: Text; FilterTxt: Text; MyEnumUrlFilter: Enum MyLogicalOperators)
     var
         Pos: Integer;
         AndLbl: Label ' and ', Locked = true;
@@ -149,76 +160,46 @@ codeunit 51102 "MyCreateUrl"
         "&Lbl": Label '&', Locked = true;
         PosicionInicialLbl: Label '?$', Locked = true;
     begin
-        FilterRepeatControl(URL, FilterTxt, MyEnumUrlFilter);
+        RepeatControl(TextFilterUrl, FilterTxt, MyEnumUrlFilter);
 
-        Pos := StrPos(URL, PosicionInicialLbl);
-        if Pos = 0 then
-            URL += "?Lbl"
-        else
-            URL += "&Lbl";
-
-        Pos := StrPos(URL, FilterTxt);
-        if Pos = 0 then
-            URL += FilterTxt
+        if IsTheQuestionMarkThere then
+            TextFilterUrl += "&Lbl"
         else begin
-            URL := PadStr(URL, StrLen(URL) - 1);
-            URL += format(MyEnumUrlFilter);
+            TextFilterUrl += "?Lbl";
+            IsTheQuestionMarkThere := true;
+        end;
+
+        Pos := StrPos(TextFilterUrl, FilterTxt);
+        if Pos = 0 then
+            TextFilterUrl += FilterTxt
+        else begin
+            TextFilterUrl := PadStr(TextFilterUrl, StrLen(TextFilterUrl) - 1);
+            TextFilterUrl += format(MyEnumUrlFilter);
         end;
     end;
 
-    local procedure FilterRepeatControl(URL: Text; FilterTxt: Text; MyEnumUrlFilter: Enum MyLogicalOperators)
+    //comprueba que no este repetido el control
+    local procedure RepeatControl(TextFilterUrl: Text; FilterTxt: Text; MyEnumUrlFilter: Enum MyLogicalOperators)
     var
         Pos: Integer;
-        error01: Label 'Filter type %1 is already in URL %2 and there can only be one per URL', Comment = 'ESP="El tipo de filtro %1 ya esta en la URL %2 y solo puede haber uno por URL"';
+        error01: Label 'Filter type "%1" is already in URL', Comment = 'ESP="El tipo de filtro "%1" ya esta en la URL"';
     begin
-        exit;
         if MyEnumUrlFilter = MyEnumUrlFilter::" " then begin
-            Pos := StrPos(URL, FilterTxt);
+            Pos := StrPos(TextFilterUrl, FilterTxt);
             if Pos <> 0 then
-                Error(error01);
+                Error(error01, FilterTxt);
         end;
     end;
 
 
     var
+        IsTheQuestionMarkThere: Boolean;
         BaseURL: Text;
         UrlFuntionPageAPI: Text;
         UrlFilterKeyPageAPI: Text;
         UrlSubPage: Text;
+        UrlSubPage_Filter: Text;
         UrlTop: Text;
         UrlSelectFields: Text;
         UrlFilter: Text;
-
-
-    /*
-https://docs.microsoft.com/es-es/learn/modules/work-with-web-services/7-query-options
-https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/webservices/use-filter-expressions-in-odata-uris
-
-
-
-
-termina con	$filter=endswith(VAT_Bus_Posting_Group,'RT')
-
-Consulta sobre Atención al cliente. Devuelve todos los clientes con valores de VAT_Bus_Posting_Group que terminan en RT.	*
-comienza con	$filter=startswith(Name, 'S')
-
-Consulta sobre Atención al cliente. Devuelve todos los nombres de clientes que comienzan con "S".	
-contiene	$filter=contains(Name, 'urn')
-
-Consulta sobre Atención al cliente. Devuelve registros de clientes para clientes con nombres que contienen la cadena "urna".	
-índice de	$filter=indexof(Location_Code, 'BLUE') eq 0
-
-Consulta sobre Atención al cliente. Devuelve registros de clientes para clientes que tienen un código de ubicación que comienza con la cadena AZUL.	
-reemplazar	$filter=replace(City, 'Miami', 'Tampa') eq 'CODERED'	
-subcadena	$filter=substring(Location_Code, 5) eq 'RED'
-
-Consulta sobre Atención al cliente. Devuelve verdadero para clientes con la cadena RED en su código de ubicación que comienza en la posición 5.	
-reducir	$filter=tolower(Location_Code) eq 'code red'	
-topper	$filter=toupper(FText) eq '2ND ROW'	
-podar	$filter=trim(FCode) eq 'CODE RED'	
-concat	$filter=concat(concat(FText, ', '), FCode) eq '2nd row, CODE RED'	
-ronda	$filter=round(FDecimal) eq 1	
-piso	$filter=floor(FDecimal) eq 0	
-techo	$filter=ceiling(FDecimal) eq 1
-*/
 }
