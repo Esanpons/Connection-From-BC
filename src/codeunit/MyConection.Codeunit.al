@@ -31,7 +31,8 @@ codeunit 51101 "MyConection"
         ResultLbl: Label 'Result: ', Comment = 'ESP="Resultado: "';
     begin
         Headers := Client.DefaultRequestHeaders();
-        Headers.Add('Authorization', Authorization);
+        if Authorization <> '' then
+            Headers.Add('Authorization', Authorization);
 
         case RequestType of
             'Get':
