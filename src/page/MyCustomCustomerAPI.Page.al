@@ -48,20 +48,14 @@ page 51100 "My Custom Customer API"
     }
 
     [ServiceEnabled]
-    //procedure editName(CustomerNo: code[20]; NewName: Text[30])
-    //procedure editName(var ActionContext: WebServiceActionContext)
-    procedure editName(): Text
-    //procedure editName(CustomerNo: code[20]): Text
+    procedure editName(var ActionContext: WebServiceActionContext)
     begin
         Rec.Name := 'NewName2 ';
         Rec.Modify();
-        /*
-                ActionContext.SetObjectType(ObjectType::Page);
-                ActionContext.SetObjectId(Page::"My Custom Customer API");
-                ActionContext.AddEntityKey(Rec.FieldNo("No."), Rec."No.");
-                ActionContext.SetResultCode(WebServiceActionResultCode::Updated);
-        */
-        exit('ok: ');
+        ActionContext.SetObjectType(ObjectType::Page);
+        ActionContext.SetObjectId(Page::"My Custom Customer API");
+        ActionContext.AddEntityKey(Rec.FieldNo("No."), Rec."No.");
+        ActionContext.SetResultCode(WebServiceActionResultCode::Updated);
     end;
 
 }
