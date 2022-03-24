@@ -13,6 +13,11 @@
           <note from="Developer" annotates="general" priority="2">ESP="El tipo de filtro "%1" ya esta en la URL"</note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit MyCreateUrl - Method RepeatControl - NamedType error01</note>
         </trans-unit>
+        <trans-unit id="Page 2361850906 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Lines</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page MyOderLine - Property Caption</note>
+        </trans-unit>
       </group>
     </body>
   </file>

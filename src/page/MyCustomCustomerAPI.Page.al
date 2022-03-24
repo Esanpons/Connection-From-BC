@@ -47,69 +47,8 @@ page 51100 "My Custom Customer API"
         }
     }
 
-    trigger OnOpenPage()
-    begin
-
-        clear(MyJson);
-        Jsontext := 'OnOpenPage := ' + MyJson.CreateJson(Rec);
-        JsonText := CopyStr(JsonText, 1, 200);
-
-        i := 1;
-
-        MyLog.reset();
-        if MyLog.FindLast() then
-            i := MyLog.EntryNo + 1;
-
-        MyLog.init();
-        MyLog.EntryNo := i;
-        MyLog.JsonText := JsonText;
-        if not MyLog.Insert() then;
-
-    end;
-
-    trigger OnModifyRecord(): Boolean
-    begin
-
-        clear(MyJson);
-        Jsontext := 'OnModifyRecord := ' + MyJson.CreateJson(Rec);
-        JsonText := CopyStr(JsonText, 1, 200);
-
-        i := 1;
-
-        MyLog.reset();
-        if MyLog.FindLast() then
-            i := MyLog.EntryNo + 1;
-
-        MyLog.init();
-        MyLog.EntryNo := i;
-        MyLog.JsonText := JsonText;
-        if not MyLog.Insert() then;
-    end;
-
-    trigger OnInsertRecord(BelowxRec: Boolean): Boolean
-    begin
-
-        clear(MyJson);
-        Jsontext := 'OnInsertRecord := ' + MyJson.CreateJson(Rec);
-        JsonText := CopyStr(JsonText, 1, 200);
-
-        i := 1;
-
-        MyLog.reset();
-        if MyLog.FindLast() then
-            i := MyLog.EntryNo + 1;
-
-        MyLog.init();
-        MyLog.EntryNo := i;
-        MyLog.JsonText := JsonText;
-        if not MyLog.Insert() then;
-
-    end;
-
     var
-        MyJson: Codeunit MyJson;
         JsonText: Text;
-        MyLog: Record MyLog;
         i: Integer;
 
     [ServiceEnabled]
