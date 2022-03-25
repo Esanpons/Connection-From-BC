@@ -18,6 +18,36 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page MyOderLine - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 3181509198 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>MySalesCommentlines</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page MySalesCommentlines - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3181509198 - Control 3004954119 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies a code for the comment.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page MySalesCommentlines - Control Code - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3181509198 - Control 2790486453 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the comment itself.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page MySalesCommentlines - Control Comment - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3181509198 - Control 3192175264 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the date the comment was created.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page MySalesCommentlines - Control Date - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3181509198 - Control 3320823955 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Line No. field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page MySalesCommentlines - Control Line No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3181509198 - Control 4200184881 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the number of the involved entry or record, according to the specified number series.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page MySalesCommentlines - Control No. - Property ToolTip</note>
+        </trans-unit>
       </group>
     </body>
   </file>

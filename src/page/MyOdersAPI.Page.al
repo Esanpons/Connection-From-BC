@@ -35,8 +35,18 @@ page 51101 "My Oders API"
                     Enabled = Rec."Sell-to Customer No." <> '';
                     SubPageLink = "Document No." = FIELD("No.");
                     UpdatePropagation = Both;
-                    EntityName = 'myorderLine';
-                    EntitySetName = 'myordersLines';
+                    EntityName = 'myorderline';
+                    EntitySetName = 'myorderslines';
+                }
+                part(SalesCommentlines; "MySalesCommentlines")
+                {
+                    ApplicationArea = Basic, Suite;
+                    Editable = true;
+                    Enabled = Rec."Sell-to Customer No." <> '';
+                    SubPageLink = "No." = FIELD("No.");
+                    UpdatePropagation = Both;
+                    EntityName = 'sales_comment_line';
+                    EntitySetName = 'sales_comment_lines';
                 }
             }
         }
