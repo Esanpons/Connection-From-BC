@@ -13,7 +13,7 @@
   "dependencies": [],
   "screenshots": [],
   "platform": "1.0.0.0",
-  "application": "19.0.0.0",
+  "application": "23.0.0.0",
   "idRanges": [
     {
       "from": 51100,
@@ -25,7 +25,6 @@
     "allowDownloadingSource": false,
     "includeSourceInSymbolFile": false
   },
-  
   "supportedLocales": [
     "en-US",
     "es-ES"
@@ -33,5 +32,5 @@
   "features": [
     "TranslationFile"
   ],
-  "runtime": "8.1"
+  "runtime": "12.0"
 }

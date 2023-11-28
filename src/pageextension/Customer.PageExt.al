@@ -69,7 +69,6 @@ pageextension 51100 "Customer" extends "Customer List"
                     URL := MyCreateUrl.GetURL();
 
                     MyConection.CreateAuthorization('admin', 'admin');
-                    MyConection.SearchTag(URL, NewCustNo);
                     Result := MyConection.CallWebService(URL, 'Put', ReturnTestJsonPageAPI('MOD'));
                     Message(Result);
                 end;
