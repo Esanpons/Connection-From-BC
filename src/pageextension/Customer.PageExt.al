@@ -198,7 +198,6 @@ pageextension 51100 "Customer" extends "Customer List"
     var
         Jtoken: JsonToken;
         JObject: JsonObject;
-        MyConection: Codeunit "MyConection";
     begin
         Jtoken.ReadFrom(JsonText);
         JObject := Jtoken.AsObject();
