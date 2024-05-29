@@ -186,20 +186,12 @@ pageextension 51100 "Customer" extends "Customer List"
         JObject.WriteTo(JsonText);
     end;
 
-    local procedure ReturnTestJsonOdata4() JsonText: Text
-    var
-        JObject: JsonObject;
-    begin
-        JObject.Add('Sell_to_Customer_No', '30000');
-        JObject.WriteTo(JsonText);
-    end;
-
-    local procedure ReturnCustomerNo(JsonText: Text) CustomerNo: Text
+    local procedure ReturnCustomerNo(l_JsonText: Text) CustomerNo: Text
     var
         Jtoken: JsonToken;
         JObject: JsonObject;
     begin
-        Jtoken.ReadFrom(JsonText);
+        Jtoken.ReadFrom(l_JsonText);
         JObject := Jtoken.AsObject();
         JObject.Get('custNo', Jtoken);
         CustomerNo := Jtoken.AsValue().AsText();

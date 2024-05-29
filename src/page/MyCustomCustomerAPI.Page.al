@@ -47,10 +47,6 @@ page 51100 "My Custom Customer API"
         }
     }
 
-    var
-        JsonText: Text;
-        i: Integer;
-
     [ServiceEnabled]
     procedure editName(var ActionContext: WebServiceActionContext)
     begin

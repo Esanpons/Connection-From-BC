@@ -17,16 +17,24 @@ page 51102 "MyOderLine"
             {
                 field("No."; Rec."No.")
                 {
+                    ToolTip = 'Specifies the value of the field', comment = 'ESP="Especifica el valor del campo"';
+                    ApplicationArea = All;
                 }
                 field("Document No."; Rec."Document No.")
                 {
+                    ToolTip = 'Specifies the value of the field', comment = 'ESP="Especifica el valor del campo"';
+                    ApplicationArea = All;
                 }
                 field(Description; Rec.Description)
                 {
+                    ToolTip = 'Specifies the value of the field', comment = 'ESP="Especifica el valor del campo"';
+                    ApplicationArea = All;
                 }
 
                 field(Quantity; Rec.Quantity)
                 {
+                    ToolTip = 'Specifies the value of the field', comment = 'ESP="Especifica el valor del campo"';
+                    ApplicationArea = All;
                 }
 
             }

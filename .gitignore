@@ -18,7 +18,7 @@ launch.json
 #Rapid Application Development File
 rad.json
 #Translation Base-file
-#*.g.xlf
+*.xlf
 #License-file
 *.flf
 #Test results file

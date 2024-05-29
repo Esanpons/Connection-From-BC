@@ -64,7 +64,6 @@ codeunit 51102 "MyCreateUrl"
     //Filtro de subpage
     procedure SetUrlSubPage_Filter(NameSubPage: Text; TagField: Text; ValueEquals: Variant; MyLogicalOperators: Enum MyLogicalOperators; MyUrlFilter: Enum MyUrlFilter)
     var
-        TxtFilter: Text;
         MyCreateUrl: Codeunit MyCreateUrl;
         WhichLbl: Label '?', Locked = true;
         WhereLbl: Label '=', Locked = true;
@@ -100,7 +99,6 @@ codeunit 51102 "MyCreateUrl"
     var
         FilterLbl: Label '$filter=', Locked = true;
         ParenthesisLbl: Label '(%1,%2)', Locked = true;
-        Pos: Integer;
         char39: Char;
         TxtValueEquals: Text;
     begin
@@ -127,14 +125,12 @@ codeunit 51102 "MyCreateUrl"
     //retorna la URL ya creada
     procedure GetURL(): Text
     var
-        Pos: Integer;
         TxtLastUrl: Text;
         PosicionInicialLbl: Label '?$', Locked = true;
         SubPageFilterLbl: Label '(%1)', Locked = true;
     begin
-        if UrlSubPage_Filter <> '' then begin
+        if UrlSubPage_Filter <> '' then
             UrlSubPage += StrSubstNo(SubPageFilterLbl, UrlSubPage_Filter);
-        end;
 
         case true of
             StrPos(UrlSubPage, PosicionInicialLbl) <> 0:
@@ -154,11 +150,8 @@ codeunit 51102 "MyCreateUrl"
     local procedure InitConsultationOptionsURL(var TextFilterUrl: Text; FilterTxt: Text; MyEnumUrlFilter: Enum MyLogicalOperators)
     var
         Pos: Integer;
-        AndLbl: Label ' and ', Locked = true;
-        OrLbl: Label ' or ', Locked = true;
         "?Lbl": Label '?', Locked = true;
         "&Lbl": Label '&', Locked = true;
-        PosicionInicialLbl: Label '?$', Locked = true;
     begin
         RepeatControl(TextFilterUrl, FilterTxt, MyEnumUrlFilter);
 
@@ -182,12 +175,12 @@ codeunit 51102 "MyCreateUrl"
     local procedure RepeatControl(TextFilterUrl: Text; FilterTxt: Text; MyEnumUrlFilter: Enum MyLogicalOperators)
     var
         Pos: Integer;
-        error01: Label 'Filter type "%1" is already in URL', Comment = 'ESP="El tipo de filtro "%1" ya esta en la URL"';
+        Text001Err: Label 'Filter type "%1" is already in URL', Comment = 'ESP="El tipo de filtro "%1" ya esta en la URL"';
     begin
         if MyEnumUrlFilter = MyEnumUrlFilter::" " then begin
             Pos := StrPos(TextFilterUrl, FilterTxt);
             if Pos <> 0 then
-                Error(error01, FilterTxt);
+                Error(Text001Err, FilterTxt);
         end;
     end;
 

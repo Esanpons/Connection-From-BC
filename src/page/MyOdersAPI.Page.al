@@ -24,7 +24,7 @@ page 51101 "My Oders API"
                 {
                     ApplicationArea = All;
                 }
-                field(SellToCustomerNo; Rec."Sell-to Customer No.")
+                field(sellToCustomerNo; Rec."Sell-to Customer No.")
                 {
                     ApplicationArea = All;
                 }

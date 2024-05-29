@@ -95,6 +95,5 @@ codeunit 51101 "MyConection"
     end;
 
     var
-        TagText: text;
         Authorization: Text;
 }
