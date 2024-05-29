@@ -1,19 +1,18 @@
 {
   "id": "7ea099c3-4540-42e3-8d71-9334fc59dc84",
-  "name": "ALProject1",
-  "publisher": "Default publisher",
+  "name": "Connection From BC",
+  "publisher": "Esteve Sanpons Carballares",
   "version": "1.0.0.0",
-  "brief": "",
-  "description": "",
-  "privacyStatement": "",
-  "EULA": "",
-  "help": "",
-  "url": "",
+  "privacyStatement": "https://www.aesva.es/",
+  "EULA": "https://www.aesva.es/",
+  "help": "https://www.aesva.es/",
+  "url": "https://www.aesva.es/",
+  "contextSensitiveHelpUrl": "https://www.aesva.es/",
   "logo": "",
   "dependencies": [],
   "screenshots": [],
   "platform": "1.0.0.0",
-  "application": "23.0.0.0",
+  "application": "24.0.0.0",
   "idRanges": [
     {
       "from": 51100,
@@ -32,5 +31,5 @@
   "features": [
     "TranslationFile"
   ],
-  "runtime": "12.0"
+  "runtime": "13.0"
 }
